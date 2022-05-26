@@ -1,0 +1,9 @@
+#dist
+sserver/*.log
+server/.DS_Store
+server/git.sh
+server/go-vben-admin
+
+.idea/
+
+
