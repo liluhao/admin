@@ -1,10 +1,14 @@
 package middleware
 
 import (
+	"admin/common"
 	"admin/dto"
 	"errors"
+	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
+	"strconv"
 	"time"
 )
 
@@ -93,7 +97,34 @@ func (j *JWT) RefershToke(tokenString string) (string, error) {
 }
 
 //生成令牌
-func GenrateToken() {}
+func GenerateToken(user *dto.UserInfoOut) (token string, msg string, ok bool) {
+	j := &JWT{[]byte(common.CONFIG.Jwt.SigningKey)}
+	res, err := strconv.ParseInt(common.CONFIG.Jwt.Expire, 10, 64)
+	if err != nil {
+		common.LOG.Error("jwt expire config info err")
+	}
+	TokenExpireAt = res
+	claims := dto.Claims{
+		user.ID,
+		user.Username,
+		user.RoleId,
+
+		jwt.StandardClaims{
+			NotBefore: int64(time.Now().Unix() - 1000),          // 签名生效时间
+			ExpiresAt: int64(time.Now().Unix() + TokenExpireAt), // 过期时间 一小时
+			Issuer:    common.CONFIG.Jwt.SigningKey,             //签名的发行者
+		},
+	}
+	token, err = j.CreateToken(claims)
+	if err != nil {
+		common.LOG.Error("创建Token失败", zap.Any("err", err))
+		return token, "创建token失败", false
+	} else {
+		bearer := "Bearer "
+		token = fmt.Sprintf("%s%s", bearer, token)
+		return token, "登录成功", true
+	}
+}
 
 //从Context里获得Claims
 func GetClaims(c *gin.Context) *dto.Claims {
@@ -103,4 +134,37 @@ func GetClaims(c *gin.Context) *dto.Claims {
 	}
 	//c.Get返回的是空接口类型，返回时需要空接口.(具体类型)类型断言下，否则编译失败
 	return claims.(*dto.Claims)
+}
+
+// JWTAuth 中间件，检查token
+func JWTAuth() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		token := c.Request.Header.Get("Authorization")
+		//fmt.Println(token)
+		/*Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMiIsInVzZXJuYW1lIjoiZ3Vlc3QiLCJyb2xlX2lkIjoiNTYiLCJleHAiOjE2NTM3Mzg0ODcsImlzcyI6ImFkbWluIiwibmJmIjoxNjUzNzMwMjg3fQ.K4zk
+		1z73XHNlJH4HBEf6kK1W4CUaUyFg-Q3ahvymDUs*/
+		if token == "" {
+			ResponseFail(c, 250, "请求未携带token，无权限访问")
+			c.Abort()
+			return
+		}
+
+		j := NewJWT()
+		// parseToken 解析token包含的信息
+		claims, err := j.ParseToken(token[len("Bearer "):])
+		if err != nil {
+
+			if err == TokenExpired {
+				ResponseFail(c, 251, "token 已经过期，请重新登录！")
+				c.Abort()
+				return
+			}
+			ResponseFail(c, 252, err.Error())
+			c.Abort()
+			return
+		}
+		// 继续交由下一个路由处理,并将解析出的信息传递下去
+		c.Set("claims", claims)
+		c.Next()
+	}
 }
