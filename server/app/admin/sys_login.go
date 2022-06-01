@@ -18,8 +18,11 @@ func Login(c *gin.Context) {
 		service.CreatOpLog(c, loginForm.Username, time.Duration(1), err.Error())
 		return
 	}
+	//fmt.Println(loginForm.Captcha) //  3419
+	//fmt.Println(loginForm.CaptchaId) //   8MbU9p2hZUCYoEplc8qD
+	//根据前端传来的验证码数字与id进行验证
 	v := captcha.VerifyString(loginForm.CaptchaId, loginForm.Captcha)
-
+	//fmt.Println(v)//true
 	if v {
 		user, msg, isPass := service.LoginCheck(loginForm.Username, loginForm.Password)
 		if !isPass {
@@ -35,21 +38,16 @@ func Login(c *gin.Context) {
 			res.UserInfo.Username = user.Username
 			token, msg, ok := middleware.GenerateToken(&res.UserInfo)
 			res.Token = token
-
 			if !ok {
 				middleware.ResponseFail(c, 201, msg)
 				service.CreatOpLog(c, loginForm.Username, time.Duration(1), msg)
-
 			} else {
+				//登录成功则在此产生响应体数据
 				middleware.ResponseSucc(c, msg, res)
 				service.CreatOpLog(c, loginForm.Username, time.Duration(1), msg)
-
 			}
 		}
 	} else {
-		//注意：此项目在不用的项目上对前端传来的用户密码产生的加密字符串都不一样，所以需要把这里输出的密码与数据库里user表进行替换
-		//fmt.Println(v)
-
 		service.CreatOpLog(c, loginForm.Username, time.Duration(1), "captcha verify error!")
 		middleware.ResponseFail(c, 201, "验证码错误，请刷新验证码重新输入！")
 

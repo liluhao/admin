@@ -7,6 +7,6 @@ import "github.com/dgrijalva/jwt-go"
 type Claims struct {
 	UserID   string `json:"user_id"`
 	Username string `json:"username"`
-	RoleID   string `json:"role_id"`
+	RoleId   string `json:"role_id"`
 	jwt.StandardClaims
 }

@@ -8,9 +8,9 @@ import (
 func TimeParseStr(t time.Time, format string) (res string) {
 	switch format {
 	case "FULL":
-		res = t.Format("2006-01-02 15:04:05")
+		res = t.Format("2022-05-31 15:04:05")
 	case "YMD":
-		res = t.Format("2006/01/02")
+		res = t.Format("2006/05/31")
 	case "HMS":
 		res = t.Format("15:04:05")
 	}
