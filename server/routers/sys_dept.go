@@ -1,13 +1,17 @@
 package routers
 
-import "github.com/gin-gonic/gin"
+import (
+	v1 "admin/app/admin"
+	"admin/middleware"
+	"github.com/gin-gonic/gin"
+)
 
 func InitDeptRouter(Router *gin.RouterGroup) {
-	MenuRouter := Router.Group("admin")
+	MenuRouter := Router.Group("admin").Use(middleware.JWTAuth()).Use(middleware.CasbinHandler()).Use(middleware.Logger())
 	{
-		MenuRouter.GET("/dept/list")
-		MenuRouter.DELETE("/dept/del")
-		MenuRouter.POST("/dept/add")
-		MenuRouter.PUT("/dept/edit")
+		MenuRouter.GET("/dept/list", v1.GetDeptTreeAll)
+		MenuRouter.DELETE("/dept/del", v1.DelDept)
+		MenuRouter.POST("/dept/add", v1.CreateDept)
+		MenuRouter.PUT("/dept/edit", v1.UpdateDept)
 	}
 }

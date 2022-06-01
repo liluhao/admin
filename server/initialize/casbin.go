@@ -5,6 +5,7 @@ import (
 	"github.com/casbin/casbin"
 	"github.com/casbin/casbin/util"
 	gormadapter "github.com/casbin/gorm-adapter"
+	_ "github.com/go-sql-driver/mysql" //这一行代码千万不能取消，否则连接不上
 	"strings"
 )
 

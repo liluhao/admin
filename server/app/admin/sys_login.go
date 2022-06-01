@@ -36,13 +36,14 @@ func Login(c *gin.Context) {
 			res.UserInfo.RoleId = strconv.Itoa(user.RoleId)
 			res.UserInfo.Status = user.Status
 			res.UserInfo.Username = user.Username
+			//登录时候会生成一个Token
 			token, msg, ok := middleware.GenerateToken(&res.UserInfo)
 			res.Token = token
 			if !ok {
 				middleware.ResponseFail(c, 201, msg)
 				service.CreatOpLog(c, loginForm.Username, time.Duration(1), msg)
 			} else {
-				//登录成功则在此产生响应体数据
+				//登录成功则在此产生响应体数据，会把含有Token的res返回
 				middleware.ResponseSucc(c, msg, res)
 				service.CreatOpLog(c, loginForm.Username, time.Duration(1), msg)
 			}

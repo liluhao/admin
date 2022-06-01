@@ -1,7 +1,7 @@
 package initialize
 
 import (
-	common "admin/common"
+	"admin/common"
 	"admin/dao"
 	"github.com/jinzhu/gorm"
 	"go.uber.org/zap"

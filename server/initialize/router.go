@@ -2,14 +2,17 @@ package initialize
 
 import (
 	"admin/common"
+
 	"admin/middleware"
 	"admin/routers"
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 func InitRouters() (Router *gin.Engine) {
 	Router = gin.Default()
+
 	Router.Use(middleware.Cors())
 	common.LOG.Info("use middleware : logger, recovery ,cors")
 
@@ -20,11 +23,14 @@ func InitRouters() (Router *gin.Engine) {
 	})
 
 	ApiV1Group := Router.Group("/api")
+
 	routers.InitBaseRouter(ApiV1Group)
 	routers.InitUserRouter(ApiV1Group)
 	routers.InitRoleRouter(ApiV1Group)
 	routers.InitMenuRouter(ApiV1Group)
+	routers.InitOpLogRouter(ApiV1Group)
 	routers.InitDeptRouter(ApiV1Group)
 	common.LOG.Info("routers register success")
+
 	return
 }

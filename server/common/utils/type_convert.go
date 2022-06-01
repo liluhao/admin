@@ -1,6 +1,8 @@
 package utils
 
 import (
+	"encoding/json"
+	"reflect"
 	"strconv"
 )
 
@@ -60,4 +62,25 @@ func IntToInt64(a int) int64 {
 //int64转int
 func Int64ToInt(a int64) int {
 	return int(a)
+}
+
+func StringToStructOrMapOrArray(a string, b *interface{}) error {
+	return json.Unmarshal([]byte(a), &b)
+}
+
+// 将结构体解析为字符串
+func StructOrMapOrArrayToString(a interface{}) (string, error) {
+	b, err := json.Marshal(a)
+	return string(b), err
+}
+
+func StructToMap(obj interface{}) map[string]interface{} {
+	obj1 := reflect.TypeOf(obj)
+	obj2 := reflect.ValueOf(obj)
+
+	var data = make(map[string]interface{})
+	for i := 0; i < obj1.NumField(); i++ {
+		data[obj1.Field(i).Name] = obj2.Field(i).Interface()
+	}
+	return data
 }

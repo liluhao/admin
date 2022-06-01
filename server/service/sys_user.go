@@ -6,7 +6,6 @@ import (
 	"admin/dao"
 	"admin/dto"
 	"errors"
-	"fmt"
 	"strconv"
 	"time"
 )
@@ -14,7 +13,7 @@ import (
 // 登录验证
 func LoginCheck(username string, password string) (user *dao.SysUser, msg string, isPass bool) {
 	password = utils.Md5(password + common.PWsalt)
-	fmt.Println(password)
+	//fmt.Println(password)//b9d11b3be25f5a1a7dc8ca04cd310b28
 	user, ok := CheckUserExist(username, password)
 
 	if !ok {

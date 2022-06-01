@@ -32,19 +32,22 @@ var (
 
 // NewJWT 新建一个jwt实例
 func NewJWT() *JWT {
-	return &JWT{}
+	return &JWT{[]byte(common.CONFIG.Jwt.SigningKey)}
 }
 
-//生成Token,根据传来的Claims来生成Token字符
+// CreateToken 生成Token,根据传来的Claims来生成Token字符
 func (j *JWT) CreateToken(claims dto.Claims) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString(j.SigningKey)
 }
 
-//解析Token ,根据传来的自定义Token字符串来生成
+// ParseToken 解析Token ,根据传来的Token字符串来解析验证
 func (j *JWT) ParseToken(tokenString string) (*dto.Claims, error) {
 	//生成Token字符串时候需要传入完整dto.Claims ,解析Token字符串传入空dto.Claims即可,返回error接口类型
 	token, err := jwt.ParseWithClaims(tokenString, &dto.Claims{}, func(token *jwt.Token) (interface{}, error) { return j.SigningKey, nil })
+	fmt.Println(tokenString)
+	/*eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMiIsInVzZXJuYW1lIjoiZ3Vlc3QiLCJyb2xlX2lkIjoiNTYiLCJleHAiOjE2NTQwODE0NTAsImlzcyI6ImFkbWluIiwibmJmIjoxNjU0MDczMjUwfQ.nCRZqHL4Gdk
+	H2yMsxnpYgCXM2w8A0mzynLCpFIKtWvY*/
 	if err != nil {
 		//jwt.ValidationError结构体实现了error接口类型，需要断言，ve.Errors是个uint32字段
 		if ve, ok := err.(*jwt.ValidationError); ok {
@@ -140,9 +143,11 @@ func GetClaims(c *gin.Context) *dto.Claims {
 func JWTAuth() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		token := c.Request.Header.Get("Authorization")
-		//fmt.Println(token)
+		//fmt.Println(token)//同一用户登录每次生成的Token字符串都不一样
 		/*Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMiIsInVzZXJuYW1lIjoiZ3Vlc3QiLCJyb2xlX2lkIjoiNTYiLCJleHAiOjE2NTM3Mzg0ODcsImlzcyI6ImFkbWluIiwibmJmIjoxNjUzNzMwMjg3fQ.K4zk
 		1z73XHNlJH4HBEf6kK1W4CUaUyFg-Q3ahvymDUs*/
+		/*Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMiIsInVzZXJuYW1lIjoiZ3Vlc3QiLCJyb2xlX2lkIjoiNTYiLCJleHAiOjE2NTQwODExMDYsImlzcyI6ImFkbWluIiwibmJmIjoxNjU0MDcyOTA2fQ.2izS
+		UUISLhlPsnQJoiLvXpsBo_bQ14O6tbYMiIVK7Ss*/
 		if token == "" {
 			ResponseFail(c, 250, "请求未携带token，无权限访问")
 			c.Abort()

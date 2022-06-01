@@ -1,6 +1,33 @@
-package server
+package main
 
-import "admin/initialize"
+import (
+	"admin/common"
+	_ "admin/docs"
+	"admin/initialize"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+)
+
+// @title go vben admin API
+// @version 1.0
+// @description  Golang admin
+// @termsOfService https://github.com/admin/admin
+
+// @contact.name liluhao
+// @contact.url http://foolartist.top
+// @contact.email 2415306912@qq.com
+
+//@host 127.0.0.1:80
+func main() {
+
+	defer common.CACHE.Close()
+	defer common.DB.Close()
+
+	// 初始化路由
+	routers := initialize.InitRouters()
+	routers.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	_ = routers.Run(":" + common.CONFIG.System.Port)
+}
 
 func init() {
 	//初始华配置
@@ -14,11 +41,4 @@ func init() {
 
 	// 初始化Casbin
 	initialize.InitCasbin()
-}
-func main() {
-
-	//初始话化路由
-	routers := initialize.InitRouters()
-	routers.Run()
-
 }
