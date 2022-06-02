@@ -12,7 +12,7 @@ import (
 	"time"
 )
 
-// 获取角色所有菜单列表
+//获取角色所有菜单列表
 func GetRoleMenuTree(RoleId int) (menuTreeList []*dto.SysMenu, err error) {
 	if val, err1 := common.CACHE.Get("sideMenu").Result(); err1 != nil {
 		var roleMenuList []*dao.SysMenu
@@ -23,6 +23,7 @@ func GetRoleMenuTree(RoleId int) (menuTreeList []*dto.SysMenu, err error) {
 		newMenuList, _ := getSideMenuList(roleMenuList)
 		menuTreeList = generateMenuTree(newMenuList)
 		res, _ := json.Marshal(menuTreeList)
+		//设置缓存
 		errRedis := common.CACHE.Set("sideMenu"+strconv.Itoa(RoleId), res, 60*60*24*time.Second).Err()
 		//设置缓存，如果缓存失败，打印错误信息到日志
 		if errRedis != nil {
@@ -36,7 +37,6 @@ func GetRoleMenuTree(RoleId int) (menuTreeList []*dto.SysMenu, err error) {
 	}
 }
 func GetRoleList(q dto.QuerySysRole) (roles []*dto.SysRole, total int, err error) {
-
 	var daoRole []*dao.SysRole
 	query := common.DB.Model(&daoRole)
 	if q.Status != "" {
@@ -101,12 +101,13 @@ func SaveRole(r dto.SysRole) (err error) {
 	if err != nil {
 		return
 	}
-
 	sysCasbin, err := GetRoleCasbinRule(&role, menu)
+	//
 	//先删除casbin，再添加
 	if r.ID != "" {
 		common.CASBIN.RemoveFilteredPolicy(0, r.ID)
 	}
+	//
 	for _, casbinRule := range sysCasbin {
 		if !common.CASBIN.AddPolicy(casbinRule.RoleId, casbinRule.Path, casbinRule.Method) { //return
 			continue

@@ -12,6 +12,7 @@ func InitMenuRouter(Router *gin.RouterGroup) {
 		MenuRouter.GET("/menu/list", v1.GetMenuTreeAll)
 		MenuRouter.POST("/menu/add", v1.CreatMenu)
 		MenuRouter.PUT("/menu/edit", v1.UpdateMenu)
+		//以下api用到了缓存
 		MenuRouter.DELETE("/menu/del", v1.DeleteMenu)
 	}
 }

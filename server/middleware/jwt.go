@@ -45,7 +45,7 @@ func (j *JWT) CreateToken(claims dto.Claims) (string, error) {
 func (j *JWT) ParseToken(tokenString string) (*dto.Claims, error) {
 	//生成Token字符串时候需要传入完整dto.Claims ,解析Token字符串传入空dto.Claims即可,返回error接口类型
 	token, err := jwt.ParseWithClaims(tokenString, &dto.Claims{}, func(token *jwt.Token) (interface{}, error) { return j.SigningKey, nil })
-	fmt.Println(tokenString)
+	//fmt.Println(tokenString)
 	/*eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMiIsInVzZXJuYW1lIjoiZ3Vlc3QiLCJyb2xlX2lkIjoiNTYiLCJleHAiOjE2NTQwODE0NTAsImlzcyI6ImFkbWluIiwibmJmIjoxNjU0MDczMjUwfQ.nCRZqHL4Gdk
 	H2yMsxnpYgCXM2w8A0mzynLCpFIKtWvY*/
 	if err != nil {

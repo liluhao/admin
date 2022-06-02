@@ -1,0 +1,4 @@
+[admin] 2022/06/02 - 16:36:10	[34minfo[0m	redis connect ping response:	{"pong": "PONG"}
+[admin] 2022/06/02 - 16:36:10	[34minfo[0m	register table success
+[admin] 2022/06/02 - 16:36:10	[34minfo[0m	use middleware : logger, recovery ,cors
+[admin] 2022/06/02 - 16:36:10	[34minfo[0m	routers register success
