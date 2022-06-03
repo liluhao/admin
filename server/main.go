@@ -4,6 +4,7 @@ import (
 	"admin/common"
 	_ "admin/docs"
 	"admin/initialize"
+	_ "github.com/codyguo/godaemon" //用于后台启动时使用./admin -d true，后台持久运行
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )

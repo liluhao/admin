@@ -83,9 +83,10 @@ go env -w GO111MODULE=on
 go env -w GOPROXY=https://goproxy.io,direct
 # 使用 go.mod，安装go依赖包
 go mod tidy
-
-# 运行
-go run main.go
+# 编译
+go build
+#在mian.go里导入  _  "github.com/codyguo/godaemon"，即可后台运行
+./admin -d true
 ```
 
 ### 3.3启动项目方法2
