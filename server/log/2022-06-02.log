@@ -2,3 +2,4 @@
 [admin] 2022/06/02 - 16:36:10	[34minfo[0m	register table success
 [admin] 2022/06/02 - 16:36:10	[34minfo[0m	use middleware : logger, recovery ,cors
 [admin] 2022/06/02 - 16:36:10	[34minfo[0m	routers register success
+[admin] 2022/06/02 - 16:46:22	[34minfo[0m	200           1ns             ::1 POST /api/login 

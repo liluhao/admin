@@ -1,7 +1,7 @@
 system:
   db-type: mysql
   cache-type: redis
-  port: '80'
+  port: '80' #若要该端口号，在admin\web\.env.development进行修改即可
   env: 'product'  # Change to "develop" to skip authentication for development mode
 
 mysql:
