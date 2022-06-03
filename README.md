@@ -26,64 +26,11 @@
 超级管理员密码：123456
 ```
 
+
+
 ## 3.使用说明
 
-### 3.1启动项目方法1
-
-####  web端
-
-```
-
-curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-
-sudo apt install nodejs
-
-node --version
-npm --version
-```
-
-
-
-```bash
-# 安装Node.js 和 npm，下面的命令将会安装一系列包，包括编译和安装从 npm 来的本地扩展。
-sudo apt install nodejs npm
-
-# 验证Node.js和npm是否成功
-npm -v
-nodejs -v
-
-# 进入项目web端
-cd web
-
-# 安装依赖
-npm i
-
-# 启动本地测试服务器
-npm  run serve
-```
-
-#### server端
-
-使用 goland等编辑工具，打开server目录，不可以打开 admin 根目录
-
-```bash
-# 进入项目目录
-cd server
-
-# 启动 Go Modules function
-go env -w GO111MODULE=on 
-# 如果您在中国大陆，请配置 GOPROXY environment variables
-go env -w GOPROXY=https://goproxy.io,direct
-# 使用 go.mod，安装go依赖包
-go mod tidy
-
-# 编译
-go build
-```
-
-
-
-### 3.2启动项目方法2
+### 3.1版本说铭
 
 * 应用版本
 
@@ -99,7 +46,51 @@ go build
 git clone https://github.com/liluhao/admin
 ```
 
-- 进入项目目录
+### 3.2启动项目方法1
+
+
+
+####  web端
+
+```bash
+# 安装
+curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+sudo apt install nodejs
+
+# 验证Node.js和npm是否成功
+node --version
+npm --version
+
+# 进入项目web端
+cd web
+
+# 安装依赖
+npm i
+
+# 启动本地测试服务器
+npm  run serve
+```
+
+#### server端
+
+```bash
+# 进入项目目录，打开server目录，不可以打开 admin 根目录
+cd server
+
+# 启动 Go Modules function
+go env -w GO111MODULE=on 
+# 如果您在中国大陆，请配置 GOPROXY environment variables
+go env -w GOPROXY=https://goproxy.io,direct
+# 使用 go.mod，安装go依赖包
+go mod tidy
+
+# 运行
+go run main.go
+```
+
+### 3.3启动项目方法2
+
+* 进入项目目录
 
 ```bash
 cd admin
@@ -118,12 +109,12 @@ sudo chmod a+x up.sh
 
 
 
-### 3.3 初始配置使用指南
+### 3.4初始配置使用指南
 
 - 配置文件路径选择在[config.yaml](./server/conf/config.yaml)
 - 导入sql初始化文件（默认mysql）[init.sql](./server/data/init.sql)
 
-### 3.4 swagger自动化API文档
+### 3.5swagger自动化API文档
 
 #### 安装 swagger
 
