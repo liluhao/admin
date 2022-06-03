@@ -14,7 +14,7 @@
 
 ## 2.项目预览
 
-[点此进行在线预览](http://www.foolartist.top:3100/#/login?redirect=/dashboard/analysis)
+[点此进行在线预览](http://www.foolartist.top)
 
 ```go
 超级管理员用户名：guest
@@ -31,6 +31,18 @@
 ### 3.1启动项目方法1
 
 ####  web端
+
+```
+
+curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+
+sudo apt install nodejs
+
+node --version
+npm --version
+```
+
+
 
 ```bash
 # 安装Node.js 和 npm，下面的命令将会安装一系列包，包括编译和安装从 npm 来的本地扩展。
