@@ -488,7 +488,7 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (2, 'guest', '', '19d6e6f9f868a4523c607f5b1c985691', 'static/upload/avatar/default.png', 56, 1, '2021-05-31 05:20:19', '2021-05-31 05:20:19', 1, '23111', '2415306912@qq.com', '');
-INSERT INTO `sys_user` VALUES (3, 'chris', '', 'a540e2ac03026c16cdb724126efad412', 'static/upload/avatar/default.png', 55, 1, '2021-05-31 23:57:47', '2021-05-31 23:57:47', 1, '123123', '2415306912@qq.com', '');
+INSERT INTO `sys_user` VALUES (2, 'guest', '', 'b9d11b3be25f5a1a7dc8ca04cd310b28', 'static/upload/avatar/default.png', 56, 1, '2021-05-31 05:20:19', '2021-05-31 05:20:19', 1, '23111', '2415306912@qq.com', '');
+INSERT INTO `sys_user` VALUES (3, 'chris', '', 'b9d11b3be25f5a1a7dc8ca04cd310b28', 'static/upload/avatar/default.png', 55, 1, '2021-05-31 23:57:47', '2021-05-31 23:57:47', 1, '123123', '2415306912@qq.com', '');
 
 SET FOREIGN_KEY_CHECKS = 1;
