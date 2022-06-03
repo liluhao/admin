@@ -1,0 +1,4 @@
+[admin] 2022/06/03 - 13:17:09	[31merror[0m	redis connect ping failed, err:	{"err": "dial tcp [::1]:6379: connectex: No connection could be made because the target machine actively refused it."}
+[admin] 2022/06/03 - 13:17:09	[34minfo[0m	register table success
+[admin] 2022/06/03 - 13:17:09	[34minfo[0m	use middleware : logger, recovery ,cors
+[admin] 2022/06/03 - 13:17:09	[34minfo[0m	routers register success

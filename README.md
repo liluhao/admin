@@ -14,7 +14,7 @@
 
 ## 2.项目预览
 
-[点此进行在线预览](http://www.foolartist.top)
+[点此进行在线预览](http://www.foolartist.top/dist/#/login?redirect=/dashboard/analysis)
 
 ```go
 超级管理员用户名：guest
