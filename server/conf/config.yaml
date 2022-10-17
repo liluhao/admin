@@ -6,7 +6,7 @@ system:
 
 mysql:
   username: root
-  password: '414524'
+  password: '2415306912@qq.com'
   path: 'localhost:3306'
   dbname: 'ginadmin'
   config: 'charset=utf8mb4&parseTime=true&loc=Local&timeout=1s'
